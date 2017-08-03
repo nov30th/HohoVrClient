@@ -1,0 +1,580 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Language" content="zh-CN" />
+    <title>HOHO`` 统计表格</title>
+    <style type="text/css">
+    *
+{
+    font-size: 12px;
+}
+body, table, td
+{
+    line-height: 18px;
+    font-size: 12px;
+    color: #000000;
+    font-family: Arial, Helvetica, sans-serif;
+}
+h1, h2, h3, h4, h5, h6
+{
+    font-size: 18px;
+    padding: 0;
+    margin: 0;
+}
+a
+{
+    text-decoration: none;
+}
+a:link
+{
+    color: #0066CC;
+    text-decoration: none;
+}
+a:visited
+{
+    color: #0066CC;
+    text-decoration: none;
+}
+a:hover
+{
+    color: #FF7F50;
+    text-decoration: underline;
+}
+a:active
+{
+    color: #FF7F50;
+    text-decoration: underline;
+}
+p
+{
+    margin: 0;
+    padding: 5px;
+}
+table
+{
+    border-collapse: collapse;
+    border: 1px solid #333333;
+    background: #ffffff;
+    margin-top: 10px;
+}
+td
+{
+    border: 1px solid #333333;
+    margin: 0;
+    padding: 3px;
+}
+img
+{
+    border: 0;
+}
+hr
+{
+    border: 0px;
+    border-top: 1px solid #666666;
+    background: #666666;
+    margin: 2px 0 4px 0;
+    padding: 0;
+    height: 0px;
+}
+img
+{
+    margin: 0;
+    padding: 0;
+}
+form
+{
+    margin: 0;
+    padding: 0;
+}
+input, select
+{
+    border: 1px solid #CCCCCC;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+}
+textarea
+{
+    font-family: "Tahoma";
+    border-width: 1px;
+    font-size: 12px;
+    color: #000000;
+}
+input.button
+{
+    background: url(  "../image/edit/fade-butt.png" );
+    border: 1px double #909090;
+    border-left-color: #c0c0c0;
+    border-top-color: #c0c0c0;
+    color: #333;
+    padding: 0.05em 0.25em 0.05em 0.25em;
+}    
+    </style>
+
+    <script type="text/javascript">
+            /**********************
+            **代码完全由HOHO编写***
+            **      欢迎盗版    ***
+            **********************/
+			var icurrentrecord = 0;
+			var iisload = false;
+			var isListDebug = false;
+			var old_bg="";
+			var olddate = "1985-11-12";
+			var todaycount = 0;
+			//时间比对
+			
+			function inStyle(obj)
+			{
+				old_bg=obj.style.background;
+				obj.style.background="#FFFF99";
+			}
+			
+			function inStyle2(obj)
+			{
+				old_bg=obj.style.background;
+				obj.style.background="#E3FFF0";
+			}
+			
+			function outStyle(obj)
+			{
+				obj.style.background=old_bg;
+			}
+			
+			function ReplaceAll(strOrg,strFind,strReplace)
+			{
+				var index = 0;
+				while(strOrg.indexOf(strFind,index) != -1)
+				{
+					strOrg = strOrg.replace(strFind,strReplace);
+					index = strOrg.indexOf(strFind,index);
+				}
+				return strOrg;
+			}
+			
+			function LoadUsername(url)
+			{
+				if (url.indexOf('qzj://') != 0)
+					return '分析数据失败1!';
+				if (url.indexOf(':') == -1)
+					return '分析数据失败2!';
+				var tmp_index = url.lastIndexOf(':');
+				var tmp_blog = '';
+				var tmp_name = '';
+				var retval = '';
+				tmp_blog = url.substring(6, tmp_index);
+				tmp_name = url.substring(tmp_index + 1, url.length);
+				if (isListDebug)
+					alert('blog:' + tmp_blog + '\nblogname:' + tmp_name);
+				switch(tmp_blog)
+				{
+				case 'Blogcn':
+					retval = ('<a href=http://' + tmp_name + '.blogcn.com/ target=_blank>' + '来自Blogcn页面:<font color=red>' + tmp_name + '</font></a>');
+					break;
+				default:
+					retval = '分析数据失败3!';
+					break;
+				}
+				return retval;
+			}
+			
+			function LoadSearchUrl(url)
+			{
+				if (url.indexOf('/vr/statistics.aspx') != -1)
+					return '对方从Nov30th记录中点击访问。';
+				else if (url.indexOf('/vr/aboutus.aspx') != -1)
+					return 'July13th关于。';
+				if (url.indexOf('http://') == 0)
+					return '<a href="' + url + '" target="_blank" title="点击打开链接">' + url + '</a>';
+				if (url.indexOf(':') == -1 || url.indexOf(':') == url.length - 1)
+					return '分析数据失败5!';
+				var tmp_index = url.indexOf(':');
+				var retval = '';
+				var tmp_urltype = url.substring(0,tmp_index);
+				var tmp_urlparm = url.substring(tmp_index + 1, url.length);
+				if (isListDebug)
+					alert('type:' + tmp_urltype + '\nparm:' + tmp_urlparm);
+				switch(tmp_urltype)
+				{
+				case 'Blogcn':
+					retval = ('<a href="http://search.blogcn.com/search?key=' + tmp_urlparm + '" target=_blank>来自BlogCn搜索:<font color=red>' + tmp_urlparm + '</font></a>');
+					break;
+				case 'BC':
+					retval = ('<font style="color: black">来自BLOGCN控制面板--好友文章更新 或者 最新留言</font>');
+					break;
+				case 'Google':
+					retval = ('<a href="http://www.google.com/search?q=' + tmp_urlparm + '" target=_blank>来自Google搜索:<font color=red>' + decodeURIComponent(tmp_urlparm) + '</font></a>');
+					break;
+				case 'Baidu':
+					retval = ('<a href="http://www.baidu.com/s?ie=utf-8&wd=' + encodeURI(tmp_urlparm) + '" target=_blank>来自Baidu搜索:<font color=red>' + tmp_urlparm + '</font></a>');
+					break;
+				case 'Soqq':
+					retval = ('<a href="http://so.qq.com/q?w=' + tmp_urlparm + '" target=_blank>来自QQ搜索:<font color=red>' + tmp_urlparm + '</font></a>');
+					break;
+				case '3721':
+					retval = ('<a href="http://seek.3721.com/index.htm?name=' + tmp_urlparm + '" target=_blank>来自3721搜索:<font color=red>' + tmp_urlparm + '</font></a>');
+					break;
+				default:
+					retval = '分析数据失败6!';
+					break;
+				}
+				retval = "<font color=blue>" + retval + "</font>"
+					return retval;
+			}
+			
+			
+			function showlist(us,la,ti,ni,lo,ip,co,blogtype,ot)
+			{
+				var newdate = la.substring(0,la.indexOf (" "));
+				if (olddate != newdate)
+				{
+					document.write("<TR onmouseover=inStyle2(this) onmouseout=outStyle(this)><TD colSpan=9>");
+					if (todaycount != 0)
+						document.write("<b>当天记录" + todaycount + "条.</b>");
+					document.write("&nbsp;</TD></TR><TR onmouseover=inStyle2(this) onmouseout=outStyle(this)><TD colSpan=9><center><font color=red><B>" + newdate + "</B></font></center></TD></TR>");
+					olddate = newdate;
+					todaycount = 0;
+				}
+				todaycount++;
+				var ip1,ip2,ip3,ip4;
+				ip4 = ip & 0x000000FF;
+				ip1 = (ip>>24)  & 0x000000FF;
+				ip2 = (ip>>16)  & 0x000000FF;
+				ip3 = (ip>>8)  & 0x000000FF;
+				var conext,conext1;
+				conext = ReplaceAll(co,'<','&lt;');
+				conext1 = ReplaceAll(conext,'>','&gt;');
+				if (blogtype==1)
+				{
+					document.write('<tr onmouseover=inStyle(this) onmouseout=outStyle(this)><td>' + la + '</td><td>' + ni + '</td><td>' + ti + '</td><td><a href=http://' + us + '.blogcn.com target=_blank title=访问当前用户的BLOG>' + us + '</a></td><td>' + lo + '</td><td>');
+					document.write(ip1 + '.' + ip2 + '.' + ip3 + '.' + ip4 + '</td><td>');
+					if (isVIP)
+					{
+					    ot *= 10;
+					    var second,minute,hour;
+					    hour = Math.floor(ot / 3600);
+					    second = ot % 60;
+					    minute = Math.floor((ot - (hour * 3600)) / 60);
+				        if (hour!=0)
+				            document.write(hour + '小时' + minute + '分' + second + '秒');
+				        else if (minute!=0)
+				            document.write(minute + '分' + second + '秒');
+				        else if (second!=0)
+				            document.write(second + '秒');
+				        else
+				            document.write('无记录');
+					}
+					document.write('</td></tr>');
+					document.write('<tr onmouseover=inStyle2(this) onmouseout=outStyle(this)>');
+					if (conext1 != '')
+					{
+					    document.write('<td align="left" colspan="9">');
+						if (conext1.indexOf('qzj://') == 0)
+							document.write(LoadUsername(conext1));
+						else
+							document.write(LoadSearchUrl(conext1));
+					}
+					else
+					{
+					    document.write('<td align="right" colspan="9">来自收藏夹或者直接输入地址访问.');
+					}
+					document.write('</td></tr>');
+					if (iisload != true)
+					{
+						document.getElementById('DivLoading').innerHTML='<h2><font color="red">正在分析并解析数据。请耐心等待！速度视你电脑快慢而定!<br /><br />如果有提示显示,请选择 <h1>否</h1>!! 才能显示全部数据。</font></h2>';
+						iisload = true;
+					}
+				}
+			}
+    </script>
+
+</head>
+<body>
+    <center>
+        当前列出<strong>全部</strong>的访问记录。
+        <br />
+        &nbsp;
+        <br />
+        <br />
+        <div id="DivLoading">
+            <span id="msg" style="color:Red;font-weight:bold;text-decoration:underline overline;"></span><font color="red">请点击IE上面黄色的部分，选择<strong>允许阻止的内容</strong>。</font></div>
+        <table bgcolor="#ffcc66" border="1" bordercolor="#ffffcc">
+            <tbody>
+                <tr>
+                    <td>
+                        最后访问<br />
+                        (GMT+8:00)</td>
+                    <td>
+                        昵称</td>
+                    <td>
+                        次数</td>
+                    <td>
+                        用户名</td>
+                    <td>
+                        物理位置</td>
+                    <td>
+                        IP地址<br />
+                        (IPv4)</td>
+                    <td>
+                        逗留时间<br />
+                        (VIP功能)</td>
+                </tr>
+                <span id="labresult"><script language="javascript">
+var isVIP=true;
+showlist('lx1111','2007-7-19 16:43:34','3','Sue殿下','浙江省金华市 电信','2104589882','qzj://Blogcn:sys2',1,0);
+showlist('','2007-7-19 16:05:29','1','','浙江省衢州市 电信','2104141914','',1,551);
+showlist('duolaimi2004','2007-7-19 15:35:22','1','哆来咪','浙江省杭州市 电信','2105026199','qzj://Blogcn:login',1,0);
+showlist('','2007-7-19 14:53:02','1','','浙江省衢州市 电信','2104140733','http://wangchaoweb.blogbus.com/',1,1);
+showlist('','2007-7-19 11:11:58','1','','浙江省金华市 电信','2104589222','qzj://Blogcn:my',1,5);
+showlist('guizhe24','2007-7-19 10:45:07','1','杜二','浙江省金华市 电信','3703328357','qzj://Blogcn:userinfo',1,5);
+showlist('','2007-7-19 0:07:03','1','','浙江省宁波市 网通','1010260425','',1,0);
+showlist('gimeli','2007-7-18 23:24:59','17','吉 美 麗','河北省石家庄市 电信','2095843273','qzj://Blogcn:userinfo',1,116);
+showlist('','2007-7-18 22:18:50','8','','浙江省衢州市 电信','2104142868','',1,1156);
+showlist('orangesheep','2007-7-18 21:23:51','27','橙','上海市浦东新区 有线通','3689504675','http://orangesheep.blogbus.com/index_1.html',1,323);
+showlist('einjay','2007-7-18 16:19:45','12','红藕香残是种落寞姿态','浙江省杭州市 电信ADSL','1018253619','qzj://Blogcn:my',1,3);
+showlist('','2007-7-18 13:55:51','1','','浙江省金华市 电信','2104586994','qzj://Blogcn:my',1,4);
+showlist('','2007-7-18 13:04:25','1','','浙江省温州市 (乐清)电信','1018486216','http://www.nov30th.com/vr/statistics.aspx',1,6);
+showlist('','2007-7-17 23:41:49','1','','浙江省杭州市 网通','3679597759','',1,0);
+showlist('','2007-7-17 23:41:36','1','','浙江省衢州市 电信','2104143802','http://www.weyii.com/blog/?page_id=130',1,1);
+showlist('cathypig','2007-7-17 23:20:55','434','蕃茄','浙江省衢州市 电信','2104140330','qzj://Blogcn:sys2',1,30877);
+showlist('','2007-7-17 23:20:55','5','','浙江省衢州市 电信','2104140330','',1,505);
+showlist('','2007-7-17 23:14:42','1','','上海市 (杨浦区)电信ADSL','975414915','http://orangesheep.blogbus.com/',1,3);
+showlist('','2007-7-17 22:12:43','1','','浙江省杭州市 电信','2105038338','http://wwfd66.blogcn.com/index.shtml',1,7);
+showlist('','2007-7-17 22:11:37','1','','浙江省杭州市 网通','2086284661','http://blog.sina.com.cn/flyshhsunshine',1,29);
+showlist('','2007-7-17 22:09:36','8','','浙江省台州市 电信','2105466803','http://teeth.blogbus.com/',1,127);
+showlist('','2007-7-17 21:18:55','12','','浙江省衢州市 电信','2104143995','qzj://Blogcn:my',1,899);
+showlist('','2007-7-17 21:13:07','2','','上海市浦东新区 有线通','3689504675','http://orangesheep.blogbus.com/index_1.html',1,18);
+showlist('','2007-7-17 20:44:15','1','','浙江省金华市 电信','2104587830','',1,10);
+showlist('','2007-7-17 17:01:37','1','','浙江省台州市 电信','1019036106','',1,1);
+showlist('','2007-7-17 14:56:51','1','','浙江省宁波市 网通','1010261015','',1,4);
+showlist('','2007-7-17 14:29:42','2','','浙江大学 城市学院','3662299020','http://einjay.blogcn.com/index.shtml',1,1);
+showlist('','2007-7-17 11:14:37','1','','河北省石家庄市 电信','2095842681','qzj://Blogcn:userinfo',1,16);
+showlist('','2007-7-16 22:48:43','8','','浙江省衢州市 电信','2104143429','http://www.blogcn.com/u2/48/27/cathypig/index.html?filelist=',1,680);
+showlist('','2007-7-16 22:43:05','1','','浙江省杭州市 电信','2105038724','http://alicesys-.blogcn.com/index.shtml',1,30);
+showlist('','2007-7-16 21:06:14','1','','浙江省杭州市 网通','3679597456','',1,2);
+showlist('','2007-7-16 20:37:49','3','','浙江省杭州市 电信ADSL','1018217217','',1,917);
+showlist('','2007-7-16 19:03:59','1','','浙江省台州市 电信','1018997015','',1,8);
+showlist('','2007-7-16 17:42:53','1','','浙江省杭州市 网通','3664605281','http://orangesheep.blogbus.com/',1,11);
+showlist('','2007-7-16 17:23:58','12','','浙江省宁波市 网通','1010260300','',1,155);
+showlist('','2007-7-16 14:05:40','3','','浙江省杭州市 网通','2086284416','http://www.blogcn.com/u2/48/27/cathypig/index.html?filelist=',1,13);
+showlist('','2007-7-16 14:01:09','10','','浙江省衢州市 电信','2104146123','',1,17);
+showlist('','2007-7-16 12:46:34','1','','浙江省衢州市 电信','2104142290','http://blog.sina.com.cn/u/1240515123',1,4);
+showlist('chenyu3456','2007-7-16 6:16:14','1','宇宇坏孩子','浙江省衢州市 电信','2104121039','qzj://Blogcn:chenyu3456',1,7);
+showlist('','2007-7-15 23:48:37','2','','浙江省台州市 电信','1019039182','',1,17);
+showlist('','2007-7-15 22:10:29','4','','浙江省衢州市 电信','2104142030','',1,910);
+showlist('','2007-7-15 19:48:35','1','','河北省石家庄市 电信','2095841976','qzj://Blogcn:gimeli',1,7);
+showlist('','2007-7-15 12:15:24','1','','广东省佛山市顺德区 电信','1032938002','',1,5);
+showlist('','2007-7-15 1:53:26','4','','浙江省杭州市 电信','2104997999','',1,30);
+showlist('','2007-7-14 22:58:04','2','','重庆市渝中区 电信ADSL','3736565991','qzj://Blogcn:lx1101',1,43);
+showlist('','2007-7-14 22:55:21','2','','浙江省金华市 电信','1019208706','',1,4);
+showlist('','2007-7-14 16:07:02','1','','湖南省吉首市保靖县 步行街梦呓网城','3662435251','qzj://Blogcn:child143',1,3);
+showlist('','2007-7-14 13:06:02','1','','浙江省嘉兴市 电信ADSL','2105284835','http://www.weyii.com/blog/?page_id=130',1,6);
+showlist('weiweilonely','2007-7-14 12:51:34','2','蔚蔚','湖北省宜昌市 电信','1035485558','qzj://Blogcn:lx1101',1,123);
+showlist('iwannabelieveyou','2007-7-14 11:30:30','347','R','浙江省杭州市 浙江大学城市学院','1039223297','qzj://Blogcn:sys2',1,413);
+showlist('','2007-7-14 10:12:58','1','','浙江省金华市 电信','2104583265','qzj://Blogcn:my',1,26);
+showlist('','2007-7-14 6:00:10','1','','陕西省西安市 联通','3704135780','http://www.weyii.com/blog/?page_id=130',1,3);
+showlist('','2007-7-13 23:29:49','13','','上海市 有线通','3689503321','http://orangesheep.blogbus.com/',1,32);
+showlist('','2007-7-13 22:42:45','1','','浙江省杭州市 网通','3679596807','',1,0);
+showlist('','2007-7-13 18:04:30','1','','浙江省宁波市 网通','2086296555','http://blog.sina.com.cn/u/1277093781',1,25);
+showlist('','2007-7-13 17:08:59','1','','上海市静安区 有线通','974653800','http://www.weyii.com/blog/?page_id=130',1,3);
+showlist('','2007-7-13 12:25:32','2','','浙江省杭州市 网通','3708557971','http://blog.sina.com.cn/flyshhsunshine',1,21);
+showlist('','2007-7-12 23:56:33','1','','浙江省台州市 电信','1033486916','http://teeth.blogbus.com/index.html',1,2);
+showlist('','2007-7-12 18:38:44','2','','江西省南昌市 电信ADSL','993285106','http://www.blogcn.com/u2/48/27/cathypig/index.html',1,5);
+showlist('','2007-7-12 13:29:19','4','','浙江省衢州市 网通','2086392083','qzj://Blogcn:userinfo',1,67);
+showlist('','2007-7-12 13:28:40','1','','河北省石家庄市 电信','2095842668','qzj://Blogcn:chenyu3456',1,2);
+showlist('','2007-7-12 11:09:26','1','','浙江省衢州市 电信','2104146367','http://blog.sina.com.cn/u/1240515123',1,3);
+showlist('','2007-7-12 8:40:22','1','','浙江省金华市 电信','2104585993','qzj://Blogcn:my',1,11);
+showlist('','2007-7-11 17:31:46','1','','浙江省杭州市 电信','2105021769','http://blog.sina.com.cn/flyshhsunshine',1,8);
+showlist('','2007-7-11 15:25:17','1','','浙江省杭州市 电信','2104999865','http://wangchaoweb.blogbus.com/',1,0);
+showlist('','2007-7-11 13:23:32','1','','重庆市涪陵区 电信ADSL','3736411931','qzj://Blogcn:userinfo',1,5);
+showlist('','2007-7-11 8:48:14','2','','浙江省金华市 电信','2104583291','',1,23);
+showlist('','2007-7-10 23:12:49','1','','上海市 长城宽带','3550662547','http://www.weyii.com/blog/?page_id=130',1,1);
+showlist('','2007-7-10 22:14:43','1','','广东省广州市番禺区 电信ADSL','977245455','http://haemo.blogcn.com/index.shtml',1,14);
+showlist('','2007-7-10 21:36:38','1','','湖北省武汉市 电信ADSL','3723002690','http://fallenyy.blogcn.com/index.shtml',1,3);
+showlist('','2007-7-10 21:15:46','1','','江西省九江市 铁通','2047376345','http://fallenyy.blogcn.com/index.shtml',1,14);
+showlist('','2007-7-10 19:06:24','1','','浙江省金华市 电信','2104587094','qzj://Blogcn:my',1,16);
+showlist('','2007-7-10 14:31:33','1','','浙江大学 城市学院','3662298163','qzj://Blogcn:sys2',1,0);
+showlist('','2007-7-10 11:03:28','1','','上海市黄浦区 /杨浦区电信ADSL','3728971578','http://orangesheep.blogbus.com/',1,35);
+showlist('','2007-7-9 15:42:52','2','','浙江大学 城市学院','3662298682','http://www.blogcn.com/u2/48/27/cathypig/index.html',1,1);
+showlist('','2007-7-8 23:12:53','1','','浙江省杭州市 电信','2105057421','',1,8);
+showlist('','2007-7-8 21:35:01','1','','浙江省杭州市 (拱墅区/西湖区)有线宽带','979677504','http://www.blogcn.com/u2/48/27/cathypig/index.html',1,12);
+showlist('','2007-7-8 21:19:24','1','','浙江省金华市 电信','2104589882','qzj://Blogcn:sys2',1,10);
+showlist('','2007-7-8 18:25:28','2','','浙江省杭州市 电信','2105022682','',1,0);
+showlist('','2007-7-8 12:20:23','1','','广西玉林市 电信ADSL','3658835805','',1,31);
+showlist('','2007-7-8 12:09:15','1','','浙江省金华市 电信','2104585510','',1,188);
+showlist('','2007-7-8 11:42:50','1','','浙江省金华市 (武义县)电信','2104588409','',1,0);
+showlist('','2007-7-8 10:15:31','1','','上海市闵行区 电信ADSL','975572425','',1,50);
+showlist('','2007-7-8 10:15:08','1','','浙江省杭州市 电信ADSL','1018232151','',1,11);
+showlist('','2007-7-8 9:57:47','1','','浙江省舟山市 电信','1018819481','http://blog.sina.com.cn/u/1277093781',1,1);
+showlist('','2007-7-8 1:12:42','1','','浙江省杭州市 浙江工业大学','1019179501','',1,1);
+showlist('','2007-7-7 23:20:57','1','','山东省潍坊市 (寿光)网通ADSL','1020429478','qzj://Blogcn:gimeli',1,73);
+showlist('','2007-7-7 22:00:11','2','','浙江省杭州市 联通','1039223041','http://www.weyii.com/blog/?page_id=130',1,1);
+showlist('','2007-7-7 16:38:05','1','','浙江省杭州市 电信','2105027145','http://seldme.cnplog.com/',1,14);
+showlist('','2007-7-7 12:23:48','1','','浙江省杭州市 网通','3664606896','http://orangesheep.blogbus.com/',1,23);
+showlist('','2007-7-7 0:10:08','1','','江苏省扬州市 邗江区/广陵区','3663398934','http://blog.sina.com.cn/hiroto',1,9);
+showlist('','2007-7-6 17:01:59','2','','浙江大学 城市学院','3662298925','http://einjay.blogcn.com/index.shtml',1,0);
+showlist('','2007-7-6 15:42:10','1','','浙江省衢州市 电信','2104140523','http://blog.sina.com.cn/saiah',1,13);
+showlist('','2007-7-6 11:34:03','2','','浙江省杭州市 电信','2104999760','http://www.weyii.com/blog/?page_id=130',1,10);
+showlist('','2007-7-6 9:28:59','2','','浙江省杭州市 电信','2105054093','http://www.weyii.com/blog/?page_id=130',1,26);
+showlist('','2007-7-5 23:49:50','1','','浙江省杭州市 电信','2105011607','',1,27);
+showlist('','2007-7-5 19:33:22','1','','上海市杨浦区 电信ADSL','3728758253','http://orangesheep.blogbus.com/',1,14);
+showlist('','2007-7-5 15:05:36','1','','浙江省杭州市 电信ADSL','3657488043','',1,4);
+showlist('','2007-7-5 12:01:10','1','','浙江省杭州市 电信','1018870028','http://www.weyii.com/blog/?page_id=130',1,3);
+showlist('onjuly28','2007-7-5 11:21:57','1','onjuly28','四川省西昌市 电信ADSL','3663301827','',1,31);
+showlist('','2007-7-4 17:29:10','2','','浙江省杭州市 电信','2105017264','',1,0);
+showlist('','2007-7-3 22:57:11','2','','浙江省杭州市 电信','1033437850','http://candy40421986.spaces.live.com/',1,13);
+showlist('','2007-7-3 20:23:23','2','','浙江省杭州市 电信','2104998548','',1,2);
+showlist('','2007-7-3 18:29:06','1','','云南省昆明市 电信ADSL','3701854859','',1,8);
+showlist('','2007-7-3 18:23:35','1','','四川省西昌市 电信ADSL','3663301875','http://wood924.blogcn.com/index.shtml',1,99);
+showlist('','2007-7-2 23:18:04','2','','浙江省杭州市 电信','2105138972','http://einjay.blogcn.com/index.shtml',1,1);
+showlist('','2007-7-2 21:36:21','1','','浙江省杭州市 电信ADSL','3657496194','http://blog.sina.com.cn/flyshhsunshine',1,0);
+showlist('','2007-7-2 21:31:34','11','','浙江省杭州市 联通','1039223298','qzj://Blogcn:sys2',1,21);
+showlist('','2007-7-2 19:01:00','5','','浙江省杭州市 电信ADSL','1018217451','',1,130);
+showlist('','2007-7-2 15:27:21','1','','浙江省杭州市 电信','2104998832','',1,0);
+showlist('','2007-7-1 22:57:41','1','','浙江省台州市 (路桥区)电信','1018976402','',1,11);
+showlist('wood924','2007-7-1 21:15:40','2','木头','云南省昆明市 民院路互联星空网吧','3701671830','http://wood924.blogcn.com/index.shtml',1,15);
+showlist('','2007-7-1 21:03:04','1','','浙江省杭州市 电信ADSL','3657495975','http://blog.sina.com.cn/flyshhsunshine',1,3);
+showlist('','2007-7-1 19:08:26','2','','上海市浦东新区 电信ADSL','3662657444','http://ababy.blogbus.com/index_4.html',1,9);
+showlist('','2007-7-1 19:03:24','1','','上海市 (徐汇区)电信','975277482','qzj://Blogcn:orangesheep',1,4);
+showlist('','2007-7-1 3:10:24','1','','山东省潍坊市 (寿光)网通ADSL','3707853607','qzj://Blogcn:daguoguo1984',1,27);
+showlist('','2007-7-1 1:55:03','1','','浙江省杭州市 电信','2105034990','',1,5);
+showlist('','2007-7-1 1:22:26','1','','浙江省杭州市 电信','1018869708','http://einjay.blogcn.com/index.shtml',1,13);
+showlist('','2007-6-30 22:59:54','2','','浙江省杭州市 电信','2105061399','http://einjay.blogcn.com/index.shtml',1,1);
+showlist('','2007-6-30 13:09:52','4','','浙江省杭州市 电信','2105020876','',1,24);
+showlist('','2007-6-30 12:56:33','1','','浙江省杭州市 电信','2104994962','http://wangchaoweb.blogbus.com/',1,4);
+showlist('','2007-6-30 0:00:17','1','','浙江省杭州市 电信ADSL','3703520196','http://blog.sina.com.cn/flyshhsunshine',1,6);
+showlist('','2007-6-29 17:30:10','1','','浙江省杭州市 电信ADSL','1034852043','http://wangchaoweb.blogbus.com/',1,1);
+showlist('','2007-6-28 22:41:53','2','','浙江省杭州市 电信','2105016951','http://blog.sina.com.cn/flyshhsunshine',1,15);
+showlist('','2007-6-28 22:22:19','1','','浙江省宁波市 网通','2086296391','http://blog.sina.com.cn/u/1277093781',1,30);
+showlist('','2007-6-28 18:01:12','1','','浙江大学 城市学院','3662299065','http://einjay.blogcn.com/index.shtml',1,0);
+showlist('','2007-6-27 23:50:45','1','','浙江省杭州市 电信','2105021325','',1,1);
+showlist('','2007-6-27 20:51:26','1','','上海市杨浦区 电信ADSL','3728759300','qzj://Blogcn:orangesheep',1,43);
+showlist('','2007-6-27 19:35:48','1','','浙江省杭州市 电信','2105017745','http://blog.sina.com.cn/flyshhsunshine',1,23);
+showlist('','2007-6-27 18:20:14','2','','浙江省杭州市 网通','3679590684','http://www.blogcn.com/u2/48/27/cathypig/index.html',1,3);
+showlist('','2007-6-26 20:28:05','1','','浙江省杭州市 电信','2105022866','',1,0);
+showlist('','2007-6-26 17:33:04','2','','浙江省杭州市 电信','2105016812','http://blog.sina.com.cn/flyshhsunshine',1,0);
+showlist('','2007-6-25 22:44:53','8','','浙江省杭州市 电信','2105023268','http://www.blogcn.com/u2/48/27/cathypig/index.html?filelist=',1,0);
+showlist('','2007-6-25 21:59:33','2','','浙江大学 城市学院','3662298292','http://www.blogcn.com/u2/48/27/cathypig/index.html',1,0);
+showlist('','2007-6-25 12:36:28','1','','浙江省杭州市 电信','2105022355','http://blog.sina.com.cn/flyshhsunshine',1,0);
+showlist('','2007-6-25 11:58:17','1','','浙江省杭州市 网通','3708555734','http://seldme.cnplog.com/',1,0);
+showlist('','2007-6-24 23:30:54','4','','浙江省宁波市 电信ADSL','2104688940','http://www.blogcn.com/u2/48/27/cathypig/index.html?filelist=',1,0);
+showlist('','2007-6-24 22:25:11','5','','浙江省台州市 (路桥)电信','1019030596','http://www.blogcn.com/u2/48/27/cathypig/index.html?filelist=',1,0);
+showlist('','2007-6-24 20:26:45','1','','河北省廊坊市 西小区兴凯阳光网吧','3739107610','',1,0);
+showlist('','2007-6-24 18:31:01','1','','浙江省杭州市 电信','2105024610','qzj://Blogcn:seldme',1,0);
+showlist('','2007-6-24 16:58:28','1','','上海市宝山区 电信ADSL','3657512057','',1,0);
+showlist('yhjxiaoyu','2007-6-24 10:28:47','1','lancashire','浙江省杭州市 网通','3664605334','qzj://Blogcn:orangesheep',1,0);
+showlist('','2007-6-24 9:56:55','1','','浙江省杭州市 电信','2105018783','http://blog.sina.com.cn/flyshhsunshine',1,0);
+showlist('alicesys_','2007-6-24 1:00:24','37','大象','浙江省绍兴市 (上虞)电信','3662317441','qzj://Blogcn:userinfo',1,0);
+showlist('','2007-6-24 0:35:54','1','','江苏省南京市 电信ADSL','987101762','http://blog.sina.com.cn/u/1240515123',1,0);
+showlist('','2007-6-23 20:07:04','1','','浙江省杭州市萧山区 旅游学院东侧新浪网吧','1033439634','',1,0);
+showlist('','2007-6-23 16:56:40','1','','云南省昆明市 民院路互联星空网吧','1032508470','http://wood924.blogcn.com/index.shtml',1,0);
+showlist('','2007-6-22 23:06:54','2','','浙江省杭州市 电信','1018829363','http://blog.sina.com.cn/flyshhsunshine',1,0);
+showlist('','2007-6-22 21:12:10','2','','四川省内江市 (资中县)网通ADSL','3708461134','http://www.blogcn.com/u2/48/27/cathypig/index.html',1,0);
+showlist('','2007-6-22 18:42:01','1','','浙江大学 城市学院','3662298779','http://einjay.blogcn.com/diary,7022846.shtml',1,0);
+showlist('','2007-6-22 12:57:19','1','','江西省南昌市 南昌理工学院北院','3702485199','http://blog.sina.com.cn/u/1240515123',1,0);
+showlist('','2007-6-21 20:51:37','2','','江西省南昌市 南昌理工学院英雄校区','3702485480','http://www.blogcn.com/u2/48/27/cathypig/index.html',1,0);
+showlist('','2007-6-21 18:33:25','1','','浙江省杭州市 电信','2105059163','',1,0);
+showlist('','2007-6-21 16:44:46','1','','浙江省杭州市 电信ADSL','3703520723','http://teeth.blogbus.com/index.html',1,0);
+showlist('','2007-6-20 22:44:45','1','','四川省成都市 电信','3701945005','qzj://Blogcn:annibaby',1,0);
+showlist('','2007-6-20 12:54:07','1','','江西省南昌市 南昌理工学院英雄校区','3702484912','http://blog.sina.com.cn/u/1240515123',1,0);
+showlist('','2007-6-19 14:30:40','2','','江西省南昌市 电信ADSL','993293724','http://www.blogcn.com/u2/48/27/cathypig/index.html',1,0);
+showlist('','2007-6-19 0:47:26','3','','江西省南昌市 南昌理工学院英雄校区','3702483234','http://www.blogcn.com/u2/48/27/cathypig/index.html?filelist=',1,0);
+showlist('','2007-6-18 21:26:14','6','','浙江省杭州市 电信','2105022111','',1,0);
+showlist('','2007-6-18 21:24:04','2','','浙江大学 城市学院','3662298541','http://www.blogcn.com/u2/48/27/cathypig/index.html',1,0);
+showlist('','2007-6-18 17:31:48','1','','浙江省杭州市 电信ADSL','3657495845','http://blog.sina.com.cn/flyshhsunshine',1,0);
+showlist('lilaoshi518','2007-6-18 16:37:39','4','pipi','浙江省杭州市 (萧山区)电信ADSL','1018239030','BC:K',1,0);
+showlist('cnfhglms','2007-6-18 15:24:12','1','芳华','湖北省宜昌市 三峡总公司','1032361736','BC:K',1,0);
+showlist('wwfd66','2007-6-17 22:08:09','10','土匪偷偷','浙江省杭州市 电信','1019164149','http://www.blogcn.com/u2/48/27/cathypig/blog/60732416.html',1,0);
+showlist('2811110','2007-6-17 21:08:14','3','秒','广东省广州市 电信','977216591','http://www.blogcn.com/u2/48/27/cathypig/blog/61256961.html',1,0);
+showlist('','2007-6-17 15:32:59','2','','浙江省杭州市 电信ADSL','3657495653','http://blog.sina.com.cn/flyshhsunshine',1,0);
+showlist('daguoguo1984','2007-6-16 11:05:50','5','杉梦破兮于墓葬','天津市 电信','3723402065','qzj://Blogcn:daguoguo1984',1,0);
+showlist('','2007-6-16 1:38:43','3','','浙江省宁波市 电信ADSL','2104729974','http://www.blogcn.com/u2/48/27/cathypig/blog/60252988.html',1,0);
+showlist('','2007-6-15 23:58:51','2','','浙江省杭州市 电信ADSL','3703081231','http://www.blogcn.com/u2/48/27/cathypig/index.html',1,0);
+showlist('lifeinmyownway','2007-6-15 23:30:57','3','吉吉','广东省广州市 广东外语外贸大学','977152671','http://www.blogcn.com/u2/48/27/cathypig/index.html?filelist=',1,0);
+showlist('','2007-6-15 11:18:50','1','','浙江省杭州市 电信','2105053915','http://wangchaoweb.blogbus.com/',1,0);
+showlist('','2007-6-14 14:24:42','1','','江西省南昌市 南昌理工学院北院','3702485009','http://blog.sina.com.cn/u/1240515123',1,0);
+showlist('','2007-6-13 11:50:09','1','','浙江省杭州市 电信ADSL','3657494720','http://blog.sina.com.cn/flyshhsunshine',1,0);
+showlist('','2007-6-13 11:39:55','1','','江西省南昌市 南昌理工学院北院','3702485206','http://blog.sina.com.cn/u/1240515123',1,0);
+showlist('','2007-6-12 21:37:23','1','','浙江大学 城市学院','3662298580','http://einjay.blogcn.com/index.shtml',1,0);
+showlist('','2007-6-12 18:06:59','1','','江苏省扬州市 电信','3663399193','http://blog.sina.com.cn/hiroto',1,0);
+showlist('','2007-6-12 16:47:22','2','','浙江省杭州市 电信','2105017858','http://www.blogcn.com/u2/48/27/cathypig/index.html',1,0);
+showlist('','2007-6-12 12:35:01','3','','浙江省杭州市 电信ADSL','1018232330','http://www.blogcn.com/u2/48/27/cathypig/blog/60252988.html',1,0);
+showlist('iwillalwaysbearound','2007-6-12 5:21:43','5','陈茜茜','四川省成都市 电信','1033719763','http://www.blogcn.com/u2/48/27/cathypig/blog/59883239.html',1,0);
+showlist('','2007-6-11 21:57:35','2','','浙江省杭州市 电信ADSL','3703081731','http://blog.sina.com.cn/flyshhsunshine',1,0);
+showlist('','2007-6-11 21:07:54','1','','河北省沧州市 网通','2031101561','',1,0);
+showlist('','2007-6-11 20:51:10','1','','浙江省杭州市 电信','2105023456','',1,0);
+showlist('','2007-6-11 20:09:31','1','','浙江省温州市 电信','1019108666','http://www.nov30th.com/vr/vipview.aspx',1,0);
+showlist('','2007-6-10 11:02:26','1','','江西省南昌市 南昌理工学院英雄校区','3702484772','http://blog.sina.com.cn/u/1240515123',1,0);
+showlist('','2007-6-10 0:21:15','2','','浙江省杭州市 电信ADSL','3657494742','http://blog.sina.com.cn/flyshhsunshine',1,0);
+showlist('','2007-6-9 20:47:52','1','','上海市杨浦区 电信ADSL','3728758332','http://ichbinorange.blogbus.com/',1,0);
+showlist('','2007-6-9 14:21:05','1','','江西省南昌市 南昌理工学院英雄校区','3702457539','http://blog.sina.com.cn/u/1240515123',1,0);
+showlist('','2007-6-9 14:20:20','5','','浙江省杭州市 电信','2105018621','',1,0);
+showlist('sunruby','2007-6-9 11:50:46','1','::青年旅館11號房の路邊咖啡館::','福建省厦门市 电信','2102241440','',1,0);
+showlist('','2007-6-9 11:12:10','1','','上海市 同济大学','3728915733','http://orangesheep.blogcn.com/diary,4165416.shtml',1,0);
+showlist('','2007-6-8 20:29:22','1','','浙江大学 城市学院','3662298384','qzj://Blogcn:alicesys_',1,0);
+showlist('','2007-6-8 18:51:03','2','','江苏省南京市 电信ADSL','987102062','http://www.blogcn.com/u2/48/27/cathypig/index.html',1,0);
+showlist('','2007-6-7 20:32:48','12','','浙江省台州市 电信','2105466670','http://www.blogcn.com/u2/48/27/cathypig/blog/59056682.html',1,0);
+showlist('','2007-6-7 19:24:30','2','','华中科技大学 ','3396470375','http://www.blogcn.com/u2/82/56/fallenyy/index.html',1,0);
+showlist('annibaby','2007-6-7 13:59:23','1','Baby莉','湖南省吉首市 吉首大学','3662430569','',1,0);
+showlist('child143','2007-6-7 8:59:59','2','糖吡緈諨甛','湖南省吉首市 吉首大学','3662430569','qzj://Blogcn:',1,0);
+showlist('','2007-6-6 18:25:25','1','','澳门 特别行政区','2099197663','http://xiaonei.com/getuser.do?portal=leaveword&id=170804500',1,0);
+showlist('wangshizhao7','2007-6-5 22:38:41','1','Hichowang','福建省福州市 电信','2085147678','qzj://Blogcn:',1,0);
+showlist('','2007-6-5 22:20:17','1','','重庆市沙坪坝区 电信','3736391952','http://badmomo.blogcn.com/index.shtml',1,0);
+showlist('','2007-6-5 21:43:13','1','','浙江省杭州市 电信','2105021905','http://blog.sina.com.cn/flyshhsunshine',1,0);
+showlist('haemo','2007-6-5 21:19:19','3','爱糜团','广东省广州市 电信','2032253218','http://www.blogcn.com/u2/48/27/cathypig/index.html',1,0);
+showlist('','2007-6-5 16:18:33','2','','浙江省杭州市 电信ADSL','1018219146','http://www.blogcn.com/u2/48/27/cathypig/index.html',1,0);
+showlist('','2007-6-5 15:25:10','1','','江苏省南京市 电信','987359419','http://blog.sina.com.cn/u/1247042830',1,0);
+showlist('','2007-6-4 19:20:55','4','','浙江省杭州市 (拱墅区/西湖区)有线宽带','979674870','http://www.blogcn.com/u2/48/27/cathypig/index.html?filelist=',1,0);
+showlist('','2007-6-4 18:49:39','8','','浙江省杭州市 电信','1018869790','http://wangchaoweb.blogbus.com/',1,0);
+showlist('','2007-6-4 18:01:55','1','','浙江省杭州市 电信','2105021863','http://blog.sina.com.cn/flyshhsunshine',1,0);
+showlist('','2007-6-4 16:15:06','2','','浙江大学 城市学院(南校区)','3545951932','',1,0);
+showlist('','2007-6-4 12:52:25','1','','广东省广州市 电信ADSL','3658783527','http://haemo.blogcn.com/index.shtml',1,0);
+showlist('','2007-6-4 11:18:18','1','','南昌理工学院 学生公寓15-16栋','3702469793','http://blog.sina.com.cn/u/1240515123',1,0);
+showlist('ohsickbaby','2007-6-3 23:57:11','2','寂小苔','广东省广州市 珠江宽频','2099248188','http://nov30th.com/vr/statistics.aspx',1,0);
+showlist('maviswww','2007-6-3 21:28:23','1','Catt_安','广东省深圳市罗湖区 电信ADSL','3682970995','http://nov30th.com/vr/statistics.aspx',1,0);
+showlist('','2007-6-3 21:13:43','2','','浙江省杭州市 极速网吧','3395320826','',1,0);
+showlist('','2007-6-3 21:12:46','1','','浙江省宁波市 电信ADSL','2104659237','',1,0);
+showlist('applexi520','2007-6-3 20:29:10','2','玫瑰圈圈','安徽省六安市 (霍邱县)电信ADSL','1018005954','http://www.nov30th.com/vr/statistics.aspx',1,0);
+showlist('723723723723','2007-6-3 17:21:58','1','我才是雅雅','山东省济南市 网通','1020850495','http://www.nov30th.com/vr/statistics.aspx',1,0);
+showlist('','2007-6-3 9:14:40','1','','安徽省淮南市 八公山区八仙街网络城','3702705530','http://badmomo.blogcn.com/index.shtml',1,0);
+showlist('','2007-6-3 0:12:35','1','','浙江省杭州市 电信','3662286593','http://ababy.blogbus.com/',1,0);
+showlist('','2007-6-2 9:22:57','1','','重庆市合川区 电信ADSL','3684197451','qzj://Blogcn:iwillalwaysbearound',1,0);
+showlist('ilovstar','2007-6-2 2:24:33','1','骑猪看黄昏','湖北省武汉市 电信','976267498','qzj://Blogcn:ilovstar',1,0);
+showlist('','2007-6-1 22:49:37','2','','浙江省杭州市 电信','3662296294','http://www.blogcn.com/u2/48/27/cathypig/index.html',1,0);
+showlist('love_xc','2007-6-1 22:38:37','1','芳草碧连天','韩国 Chongju University','3422353902','qzj://Blogcn:',1,0);
+showlist('','2007-5-31 22:50:35','1','','江西省南昌市 南昌理工学院英雄校区','993382986','http://blog.sina.com.cn/u/1240515123',1,0);
+showlist('dandan3358','2007-5-31 22:47:13','1','Claudia','四川省德阳市 电信','1035792221','BC:K',1,0);
+showlist('gaoqi728','2007-5-31 22:47:11','1','琪琪荔枝','北京市大兴区 网通','3722020994','BC:K',1,0);
+</script></span></tbody></table>
+    </center>
+
+    <script>
+			
+			//斑马线
+			var tables=document.getElementsByTagName("table");
+			var b=false;
+			for (var j = 0; j < tables.length; j++){
+				
+				var cells = tables[j].getElementsByTagName("tr");
+				
+				cells[0].style.background="#DAE2E8";
+				for (var i = 1; i < cells.length; i++){
+					if(b){
+						cells[i].style.background="#FFFFFF";
+						b=false;
+					}
+					else{
+						cells[i].style.background="#F1F4F7";
+						b=true;
+					};
+				};
+			}
+			document.getElementById('DivLoading').innerHTML='';
+			document.close();
+			
+    </script>
+
+</body>
+</html>

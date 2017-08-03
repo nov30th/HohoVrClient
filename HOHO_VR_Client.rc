@@ -1,0 +1,317 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Chinese (P.R.C.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 4, 2\r\n"
+    "#pragma code_page(936)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\HOHO_VR_Client.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""l.chs\\afxres.rc""          // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "res\\RecentSearches.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 175, 75
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "关于 HOHO VR 系统"
+FONT 9, "宋体"
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,21,21
+    LTEXT           "HOHO统计的客户端 0.22 版",IDC_STATIC,40,10,119,8,
+                    SS_NOPREFIX
+    LTEXT           "版权所有 (C) 2007 Nov30th.Com",IDC_STATIC,40,25,119,8
+    DEFPUSHBUTTON   "确定",IDOK,59,47,50,14,WS_GROUP
+END
+
+IDD_HOHO_VR_CLIENT_DIALOG DIALOGEX 0, 0, 305, 206
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_TOOLWINDOW | WS_EX_APPWINDOW
+CAPTION "HOHO系统客户端 V0.22"
+MENU IDR_MENUMAIN
+FONT 9, "宋体"
+BEGIN
+    GROUPBOX        "登入信息",IDC_STATIC,7,7,291,57
+    LTEXT           "域名",IDC_STATIC,21,24,17,8
+    LTEXT           "密码",IDC_STATIC,21,44,17,8
+    EDITTEXT        IDC_EDITUSERNAME,50,21,94,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDITPASSWORD,50,41,94,14,ES_PASSWORD | 
+                    ES_AUTOHSCROLL
+    CONTROL         "启用SSL安全连接",IDC_CHECK1,"Button",BS_AUTOCHECKBOX | 
+                    WS_DISABLED | WS_TABSTOP,153,46,76,10
+    GROUPBOX        "连接设定",IDC_STATIC,7,169,187,30
+    COMBOBOX        IDC_COMBOSERVER,45,179,137,57,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "服务器",IDC_STATIC,13,183,25,8
+    CONTROL         "保存用户名",IDC_CHECKPWD,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,153,21,56,10
+    GROUPBOX        "操作",IDC_STATIC,202,169,96,30
+    PUSHBUTTON      "下载来访数据",IDC_BUTTONDOWNLOAD,216,180,68,14,
+                    WS_DISABLED
+    GROUPBOX        "帐户信息",IDC_STATIC,7,68,291,90
+    DEFPUSHBUTTON   "登录",IDC_BUTTONLOGIN,239,20,50,36
+    LTEXT           "用户名",IDC_STATIC,40,83,25,8
+    LTEXT           "VIP到期日期",IDC_STATIC,20,111,45,8
+    LTEXT           "帐户到期日期",IDC_STATIC,16,125,49,8
+    LTEXT           "注册日期",IDC_STATIC,32,97,33,8
+    CONTROL         "Progress1",IDC_PROGRESSSPACE,"msctls_progress32",
+                    WS_BORDER,69,138,216,11
+    LTEXT           "使用空间大小",IDC_STATIC,16,139,49,8
+    LTEXT           "VIP有效期",IDC_STATIC,175,83,37,8
+    LTEXT           "在线时长功能",IDC_STATIC,163,97,49,8
+    LTEXT           "Static",IDC_STATICUSERNAME,73,83,75,8
+    LTEXT           "Static",IDC_STATICREGDATE,73,97,75,8
+    LTEXT           "Static",IDC_STATICVIPEXPDATE,73,111,75,8
+    LTEXT           "Static",IDC_STATICACCEXPDATE,73,125,75,8
+    LTEXT           "Static",IDC_STATICVIPVALID,223,83,68,8
+    LTEXT           "Static",IDC_STATICTURNONTIME,223,97,68,8
+    LTEXT           "最后登录时间",IDC_STATIC,163,111,49,8
+    LTEXT           "Static",IDC_STATICLASTLOGIN,223,111,68,8
+    CONTROL         "记录保存到文件",IDC_CHECKAUTOOPEN,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,153,34,72,10
+END
+
+IDD_CONTROL_DIALOG DIALOGEX 0, 0, 171, 28
+STYLE DS_SYSMODAL | DS_MODALFRAME | WS_POPUP | WS_CAPTION
+EXSTYLE WS_EX_TOOLWINDOW
+CAPTION "数据交换中"
+FONT 10, "宋体"
+BEGIN
+    EDITTEXT        IDC_EDITSTATUS,7,7,158,14,ES_AUTOHSCROLL | ES_READONLY | 
+                    NOT WS_BORDER,WS_EX_TRANSPARENT
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 0,2,1,0
+ PRODUCTVERSION 0,2,1,0
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x3L
+#else
+ FILEFLAGS 0x2L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080404b0"
+        BEGIN
+            VALUE "Comments", "\0"
+            VALUE "CompanyName", "Nov30th.Com\0"
+            VALUE "FileDescription", "HOHO统计系统客户端文件\0"
+            VALUE "FileVersion", "0, 2, 1, 0\0"
+            VALUE "InternalName", "HOHO_VR_Client\0"
+            VALUE "LegalCopyright", "版权所有 (C) 2007 Nov30th.Com\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "HOHO_VR_Client.EXE\0"
+            VALUE "PrivateBuild", "\0"
+            VALUE "ProductName", "HOHO统计信息下载程序\0"
+            VALUE "ProductVersion", "0, 2, 1, 0\0"
+            VALUE "SpecialBuild", "\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x804, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 168
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 68
+    END
+
+    IDD_HOHO_VR_CLIENT_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 298
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 199
+    END
+
+    IDD_CONTROL_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 164
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 21
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_HOHO_VR_CLIENT_DIALOG DLGINIT
+BEGIN
+    IDC_COMBOSERVER, 0x403, 26, 0
+0x7468, 0x7074, 0x2f3a, 0x6e2f, 0x766f, 0x3033, 0x6874, 0x632e, 0x6d6f, 
+0x762f, 0x2f72, 0x5041, 0x0049, 
+    IDC_COMBOSERVER, 0x403, 21, 0
+0x7468, 0x7074, 0x2f3a, 0x312f, 0x3732, 0x302e, 0x302e, 0x312e, 0x412f, 
+0x4950, "\000" 
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MENUMAIN MENU DISCARDABLE 
+BEGIN
+    POPUP "操作"
+    BEGIN
+        MENUITEM "清除超过3天的记录",           ID_MENUITEM3DAYS
+        MENUITEM "清除所有记录",                ID_MENUITEM32772
+        MENUITEM "清除只有IP的记录",            ID_MENUITEM32773
+        MENUITEM SEPARATOR
+        MENUITEM "重置所有访问次数",            ID_MENUITEM32774
+        MENUITEM "重置VIP逗留时间",             ID_MENUITEM32775
+    END
+    POPUP "VIP状态"
+    BEGIN
+        MENUITEM "绑定新的VIP号码",             ID_MENUITEM32776, GRAYED
+        MENUITEM "显示当前的VIP号码",           ID_MENUITEM32777, GRAYED
+        MENUITEM "作废当前的VIP",               ID_MENUITEM32778, GRAYED
+    END
+    POPUP "模板安装检查"
+    BEGIN
+        MENUITEM "新版本的BLOGCN检查",          ID_MENUITEM32780
+    END
+    MENUITEM "关于",                        ID_MENUITEMABOUT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// 24
+//
+
+1                       24      DISCARDABLE     "res\\default1.bin"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ABOUTBOX            "关于 天才HOHO同学(&A)..."
+END
+
+#endif    // Chinese (P.R.C.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE 4, 2
+#pragma code_page(936)
+#endif //_WIN32
+#include "res\HOHO_VR_Client.rc2"  // non-Microsoft Visual C++ edited resources
+#include "l.chs\afxres.rc"          // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
